@@ -48,7 +48,7 @@ WebRTCDataMethold.caching = function(data){
  else if(data.type == "FC"){//Front Camera
  	localSocket.sendCmd(data.type, {r: data.r, p: data.p});
 						
-	//console.log( data.p, data.r );
+	console.log( data.p, data.r );
 	
 	if(animate.teleRubin.eyes){
 		animate.teleRubin.gaze(data.r,data.p);
@@ -59,7 +59,7 @@ WebRTCDataMethold.caching = function(data){
  	//display teleRubin UI//
  	animate.teleRubin.init();
  }
- //console.log(data);
+ console.log(data);
 
 }
 

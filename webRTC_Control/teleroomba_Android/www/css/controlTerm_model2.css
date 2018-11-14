@@ -221,6 +221,10 @@ a{color: #FFF !important;}
 				background-image: url("../img/beep_icon.svg");
 			}
 
+			#micToggel{
+				background-image: url("../img/mic_icon.svg");
+			}
+
 			#beepTypesBox{
 				overflow: hidden;
 				height:0px;

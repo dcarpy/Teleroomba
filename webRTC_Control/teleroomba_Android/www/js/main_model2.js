@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
       // handle events representing incoming calls
       peer.on('open',function(id){
-        //console.log("peer_id: " + id);
+        console.log("peer_id: " + id);
       });
 
       peer.on('connection',function(connection){
@@ -116,7 +116,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     connection.on('data', function(data) {
 
-      //console.log("connection " + data.type + " " + data.text);
+      console.log("connection " + data.type + " " + data.text);
       WebRTCDataMethold.cachingFeedBack(data);
 
     });

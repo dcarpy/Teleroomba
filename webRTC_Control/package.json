@@ -9,8 +9,9 @@
   "author": "Rubin Huang <hh1390@nyu.com> in ITP NYU",
   "license": "MIT",
   "dependencies": {
-    "peer": "^0.2.5",
+    "express": "^4.13.4",
     "ip": "^0.3.0",
-    "express": "^4.13.4"
+    "peer": "^0.2.5",
+    "socket.io": "^2.1.1"
   }
 }

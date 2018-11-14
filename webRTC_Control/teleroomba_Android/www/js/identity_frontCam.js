@@ -2,12 +2,12 @@
 //I am Front Camera
 
 var identity = {
-	device : "GoPro Camera",
+	device : "Logitech Webcam",
 	role : "frontCam",
 	target : "control2",
 	
-	video : {optional:[ {minHeight:1920}, {minWidth:1080} ]},
-	audio : false
+	video : {optional:[ {minHeight:1280}, {minWidth:720} ]},
+	audio : true
 	
 }
 

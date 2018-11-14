@@ -30,8 +30,8 @@ var https = require('https');
 var fs = require('fs');
 
 var options = {
-   key: fs.readFileSync('my-key.pem'),
-   cert: fs.readFileSync('my-cert.pem'),
+   key: fs.readFileSync('privkey.pem'),
+   cert: fs.readFileSync('cert.pem'),
    requestCert: false,
    rejectUnauthorized: false
  };
@@ -67,32 +67,32 @@ var options = {
 app.use(express.static('teleroomba_Android/www'));
 
 app.get('/', function(req, res){
-  res.sendfile('teleroomba_Android/www/index.html');
+  res.sendFile('teleroomba_Android/www/index.html', {"root": __dirname});
 });
 
 app.get('/role', function(req, res){
-  res.sendfile('teleroomba_Android/www/route.html');
+  res.sendFile('teleroomba_Android/www/route.html', {"root": __dirname});
 });
 
 app.get('/360Cam', function(req, res){
-  res.sendfile('teleroomba_Android/www/360Cam.html');
+  res.sendFile('teleroomba_Android/www/360Cam.html', {"root": __dirname});
 });
 
 
 app.get('/frontCam', function(req, res){
-  res.sendfile('teleroomba_Android/www/frontCam.html');
+  res.sendFile('teleroomba_Android/www/frontCam.html', {"root": __dirname});
 });
 
 app.get('/360', function(req, res){
-  res.sendfile('teleroomba_Android/www/360view/index.html');
+  res.sendFile('teleroomba_Android/www/360view/index.html', {"root": __dirname});
 });
 
 app.get('/test', function(req, res){
-  res.sendfile('teleroomba_Android/www/360view/index1.html');
+  res.sendFile('teleroomba_Android/www/360view/index1.html', {"root": __dirname});
 });
 
 app.get('/control2', function(req, res){
-  res.sendfile('teleroomba_Android/www/control_model2.html');
+  res.sendFile('teleroomba_Android/www/control_model2.html', {"root": __dirname});
 });
 
 

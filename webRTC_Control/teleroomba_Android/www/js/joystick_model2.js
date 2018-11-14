@@ -1,6 +1,6 @@
 	//Joystick Input//
 	
-	//console.log("touchscreen is", VirtualJoystick.touchScreenAvailable() ? "available" : "not available");
+	console.log("touchscreen is", VirtualJoystick.touchScreenAvailable() ? "available" : "not available");
 
 	var joystick = {};
 
@@ -51,7 +51,7 @@
 		if(turningSpeedBack>=50){
 			turningSpeedBack=50;
 		}
-		//console.log(arcTanValue);
+		console.log(arcTanValue);
 
 		if(0-joystick.stick.deltaY()>=0){
 			if(joystick.stick.deltaX()<=0){

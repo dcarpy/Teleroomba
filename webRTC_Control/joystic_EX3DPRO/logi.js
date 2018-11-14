@@ -101,6 +101,8 @@ logiEX.checkConnection = function(){
 
   var hidDeviceList = hid.devices();
 
+  //console.log(hidDeviceList);
+
   for( i = 0; i < hidDeviceList.length; i++ ){
     if(hidDeviceList[i].vendorId == 1133 && hidDeviceList[i].productId == 49685){
       logiEX.logiEX_HID = new hid.HID(1133, 49685);

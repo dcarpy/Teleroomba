@@ -44,7 +44,7 @@ EX3D.calcuDrive = function(roll,pitch){
 
 		var arcTanValue = Math.atan(deltaY/deltaX);
 
-		//console.log( arcTanValue / Math.PI * 360 );
+		console.log( arcTanValue / Math.PI * 360 );
 
 		var ratio = null;
 		var map = {};
@@ -144,7 +144,7 @@ EX3D.calcuDrive = function(roll,pitch){
 }
 
 EX3D.calcuAction = function(data){
-	//console.log(data);
+	console.log(data);
 
 	if(data.th){
 		var throttle = data.th;
@@ -163,7 +163,7 @@ EX3D.calcuAction = function(data){
 			}
 		}
 	}
-	//console.log(EX3D.throttle);
+	console.log(EX3D.throttle);
 }
 
 EX3D.initSocket = function(){
