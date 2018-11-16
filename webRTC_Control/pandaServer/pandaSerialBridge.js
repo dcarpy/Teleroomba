@@ -1,4 +1,11 @@
-var SerialPort = require("serialport");
+const SerialPort = require("serialport");
+const Readline = require('@serialport/parser-readline');
+const port = new SerialPort('COM6', {
+	baudRate: 115200
+});
+const parser = new Readline({ delimiter: '\r\n'});
+port.pipe(parser);
+
 var express = require('express');
 var app = express();
 var ip = require("ip");
@@ -19,7 +26,6 @@ var httpsOptions = {
    key: fs.readFileSync('my-key.pem'),
    cert: fs.readFileSync('my-cert.pem')
  };
-
 
 
 var checkMedia = function(){
@@ -46,7 +52,6 @@ var checkMedia = function(){
 
 var io = null;
 
-
 var useHttps = true;
 
 if(useHttps == false){
@@ -61,11 +66,9 @@ if(useHttps == false){
       console.log("Service server open on http://"+ ip.address() + ":" + 3000);
   });
 
-
   io = require('socket.io')(http);
-
 }
-else{
+else {
 
   var httpsServer = https.createServer(httpsOptions,app);
 
@@ -83,7 +86,8 @@ else{
 
 app.use(function (req, res, next) {
 
-    res.header('Access-Control-Allow-Origin', "https://teleroomba.itp.io:8000");
+    // Website you wish to allow to connect
+    res.header('Access-Control-Allow-Origin', "https://wilson.servebeer.com:8000");
     // Request methods you wish to allow
     res.setHeader('Access-Control-Allow-Methods', 'GET,POST');
 
@@ -102,11 +106,11 @@ app.use(function (req, res, next) {
 app.use(express.static('public'));
 
 app.get('/info', function(req, res){
-  res.sendfile('public/info.html');
+  res.sendFile(__dirname + 'public/info.html');
 });
 
 app.get('/localQR', function(req, res){
-  res.sendfile('public/localQR.html');
+  res.sendFile(__dirname + 'public/localQR.html');
 });
 
 
@@ -164,90 +168,48 @@ var startUpSequence = {
 }
 
 
-
 //-------SerialPort----------//
 
-//Unix MacOS
-var portNameChoice = ["/dev/cu.usbmodem1411", "/dev/cu.usbmodem1421", "COM3", "COM5", "COM6"];
-portName = null;
-var panda_arduino_Port = null;
-
-SerialPort.list(function (err, ports) {
-  ports.forEach(function(port) {
-    //console.log(port);
-     //console.log(port.comName);
-    // console.log(port.pnpId);
-    // console.log(port.manufacturer);
-
-    for(i=0; i < portNameChoice.length ;i++){
-
-      if(portNameChoice[i] == port.comName){
-        portName = port.comName;
-        // console.log("ok " + i);
-      }
-
-    }
-
-  });
-
-  if(portName != null){
-
-    panda_arduino_Port = new SerialPort(portName, {
-       baudRate: 38400,
-       // look for return and newline at the end of each data packet:
-       parser: SerialPort.parsers.readline("\n")
-     });
-    //console.log(panda_arduino_Port);
-
-    panda_arduino_Port.on('open', function() {
-      console.log("Serial opened on " + portName);
-
-
-          //Fire Startup_Sequence//
-          setTimeout(function(){
-            panda_arduino_Port.write("ready");
-            startUpSequence.sequenceDriver(0);
-          },1200);
-
-    });
-
-    panda_arduino_Port.on('data', function(data) {
-      //data feed check
-      process.stdout.clearLine();
-      process.stdout.cursorTo(0);
-      process.stdout.write(data);
-      //console.log(">> " + data);
-      //console.log(cmd.cmd + "," + cmd.buffer1 + "," + cmd.buffer2 + "\n");
-
-      var serialSend = null;
-
-      if( cmd.cmd < 5 ){
-        serialSend = (cmd.cmd + "," + cmd.buffer1 + "," + cmd.buffer2);
-      }else{
-        serialSend = (cmd.cmd + "," + cmd.buffer1 + "," + cmd.buffer2 + ","+ cmd.buffer3 + ","+ cmd.buffer4);
-        cmd.cmd -= 5;
-        cmd.buffer3 = 0;
-        cmd.buffer4 = 0;
-      }
-      //console.log(serialSend);
-
-
-      panda_arduino_Port.write(serialSend);
-
-    });
-
-    // open errors will be emitted as an error event
-    panda_arduino_Port.on('error', function(err) {
-      console.log('Error: ', err.message);
-    });
-
-    }
-
-    else{
-      console.log("No avaliable serial port");
-      startupLog(1);
-    }
+port.on('open', function() {
+	console.log("Serial opened on COM6");
+	
+	// Fire Startup_Sequence
+	setTimeout(function(){
+		port.write('ready');
+		startUpSequence.sequenceDriver(0);
+	}, 1200);
+	
 });
+
+port.on('data', function(data) {
+  //data feed check
+  process.stdout.clearLine();
+  process.stdout.cursorTo(0);
+  process.stdout.write(data);
+  //console.log(">> " + data);
+  //console.log(cmd.cmd + "," + cmd.buffer1 + "," + cmd.buffer2 + "\n");
+
+  var serialSend = null;
+
+  if( cmd.cmd < 5 ){
+    serialSend = (cmd.cmd + "," + cmd.buffer1 + "," + cmd.buffer2);
+  } else {
+    serialSend = (cmd.cmd + "," + cmd.buffer1 + "," + cmd.buffer2 + ","+ cmd.buffer3 + ","+ cmd.buffer4);
+    cmd.cmd -= 5;
+    cmd.buffer3 = 0;
+    cmd.buffer4 = 0;
+  }
+  console.log(serialSend);
+
+  port.write(serialSend);
+
+});
+
+// open errors will be emitted as an error event
+port.on('error', function(err) {
+  console.log('Error: ', err.message);
+});
+
 
 //---------Socket.io------------//
 
