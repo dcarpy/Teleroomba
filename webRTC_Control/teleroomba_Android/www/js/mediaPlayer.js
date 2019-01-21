@@ -4,7 +4,7 @@ var mediaPlayer = {
 	videoPlayer : null,
 
 	mediaList : null,
-	srcRepo : "https://localSerial.itp.io:3000/media/"
+	srcRepo : "https://wilson.servebeer.com:3000/media/"
 
 };
 

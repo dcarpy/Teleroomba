@@ -22,8 +22,6 @@ http.listen(servicePortHTTP, function(){
 });
 
 
-
-
 //--------------https-----------------------//
 
 var https = require('https');
@@ -55,11 +53,6 @@ var options = {
 
 
   });
-
-
-
-
-
 
 
 //-------------Express----------------------//
@@ -119,65 +112,4 @@ console.log("");
 //console.log('peer server running on ' + ip.address() + ':' + peerPort);
 //HTTPS
 console.log('peer server running on ' + ip.address() + ':' + httpsPeerPort);
-
-
-
-
-//Machine Learning??
-
-//Test on Wekinator
-
-//---------OSC + Socket.io----------//
-
-
-// var osc = require('osc');
-//var io = require('socket.io')(http);
-
-//io.on('connection', function(socket){
-
-//console.log("socket connected" + socket.id);
-
-//   socket.on('imageData', function(data){
-
-//   	//console.log(data);
-//   	UDPSend(data);
-
-//   });
-
-//   socket.on('disconnect', function(e){
-//   	console.log("socket disconnected");
-//   });
-
-//});
-
-// var udpPort = new osc.UDPPort({
-// 	localAddress : "127.0.0.1",
-// 	localPort : 12000
-// });
-
-// udpPort.open();
-// console.log("osc_udp open!");
-
-
-// function UDPSend(data){
-
-// 	udpPort.send({
-// 		address : "/wek/inputs",
-
-// 		args:data
-
-// 	},"127.0.0.1", 6448);
-
-// }
-
-// udpPort.on("message",function(oscMessage){
-
-// 	//console.log(oscMessage);
-
-// 	io.emit( "answer", oscMessage );
-
-// });
-
-
-
 

@@ -141,6 +141,3 @@ EX3D.calcuDrive = function(roll,pitch){
 
 }
 
-
-
-

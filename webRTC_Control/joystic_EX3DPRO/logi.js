@@ -243,7 +243,6 @@ logiEX.checkConnection = function(){
 
 logiEX.checkConnection();
 
-
 var map = {};
 
 map.mapFunc = function(input,floor,ceil,MFloor,MCeil){
@@ -288,8 +287,8 @@ var io = null;
 var fs = require('fs');
 
 var httpsOptions = {
-   key: fs.readFileSync('my-key.pem'),
-   cert: fs.readFileSync('my-cert.pem')
+   key: fs.readFileSync('privkey.pem'),
+   cert: fs.readFileSync('cert.pem')
  };
 
 var useHttps = true;

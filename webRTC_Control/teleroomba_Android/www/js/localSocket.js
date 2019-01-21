@@ -1,4 +1,4 @@
-var socket = io.connect("https://localserial.itp.io:3000");
+var socket = io.connect("https://wilson.servebeer.com:3000");
 
 var localSocket = {}
 

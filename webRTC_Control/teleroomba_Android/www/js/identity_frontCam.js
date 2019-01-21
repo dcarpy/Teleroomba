@@ -44,5 +44,4 @@ identity.replacePeerId = function(){
 		},400);
 	},800);
 
-
 }

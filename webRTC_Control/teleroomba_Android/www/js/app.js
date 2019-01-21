@@ -33,7 +33,7 @@ app.initialize = function()
 
 app.startScan = function()
 {	
-	//console.log("bluno_scan_start");
+	console.log("bluno_scan_start");
 	app.disconnect();
 
 

@@ -9,13 +9,13 @@ WebRTCDataMethold.sendData = null;
 WebRTCDataMethold.caching = function(data){
  if(data.type == 'DR'){
 	localSocket.sendCmd(data.type, {lV: data.lV, 
-									rV: data.rV} 
-						);
+					rV: data.rV} 
+	);
  }
  else if(data.type == 'BP'){ //Beep
  	localSocket.sendCmd(data.type, {act: data.act, 
-									tp: data.tp} 
-						);
+					tp: data.tp} 
+	);
  }
  else if(data.type == 'SM'){ //enter safe mode
 	 localSocket.sendCmd(data.type,null);
@@ -45,7 +45,7 @@ WebRTCDataMethold.caching = function(data){
  		
  	}
  }
- else if(data.type == "FC"){//Front Camera
+ else if(data.type == 'FC'){//Front Camera
  	localSocket.sendCmd(data.type, {r: data.r, p: data.p});
 						
 	console.log( data.p, data.r );
@@ -54,7 +54,7 @@ WebRTCDataMethold.caching = function(data){
 		animate.teleRubin.gaze(data.r,data.p);
 	}
  }
- else if(data.type == "VR"){//VRMODE_Face
+ else if(data.type == 'VR'){//VRMODE_Face
 
  	//display teleRubin UI//
  	animate.teleRubin.init();

@@ -170,7 +170,7 @@ EX3D.initSocket = function(){
 
 	if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) == false ) {
 
-		EX3Dsocket = io("https://localserial.itp.io:3001");
+		EX3Dsocket = io("https://wilson.servebeer.com:3001");
 		
 		EX3Dsocket.on("DR",function(data){
 			EX3D.calcuDrive(data.r, data.p);
