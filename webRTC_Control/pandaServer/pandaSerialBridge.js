@@ -6,6 +6,8 @@ const port = new SerialPort('COM6', {
 const parser = new Readline({ delimiter: '\r\n'});
 port.pipe(parser);
 
+var create = require('create2');
+
 var express = require('express');
 var app = express();
 var ip = require("ip");
@@ -23,8 +25,8 @@ var fs = require('fs');
 const junk = require('junk');
 
 var httpsOptions = {
-   key: fs.readFileSync('my-key.pem'),
-   cert: fs.readFileSync('my-cert.pem')
+   key: fs.readFileSync('privkey.pem'),
+   cert: fs.readFileSync('cert.pem')
  };
 
 
@@ -66,7 +68,7 @@ if(useHttps == false){
       console.log("Service server open on http://"+ ip.address() + ":" + 3000);
   });
 
-  io = require('socket.io')(http);
+  io = require('socket.io')(httpServer);
 }
 else {
 
