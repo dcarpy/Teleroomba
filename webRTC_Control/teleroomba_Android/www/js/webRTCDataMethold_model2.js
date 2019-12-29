@@ -20,6 +20,9 @@ WebRTCDataMethold.caching = function(data){
  else if(data.type == 'SM'){ //enter safe mode
 	 localSocket.sendCmd(data.type,null);
  }
+ else if(data.type == 'DK'){ //autodock
+	 localSocket.sendCmd(data.type,null);
+ }
  else if(data.type == 'MD'){ //Control Media
  	if(data.key == "load"){
  		mediaPlayer.requestLocalMediaLS();

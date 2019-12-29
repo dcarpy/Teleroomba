@@ -44,7 +44,7 @@ EX3D.calcuDrive = function(roll,pitch){
 
 		var arcTanValue = Math.atan(deltaY/deltaX);
 
-		console.log( arcTanValue / Math.PI * 360 );
+		//console.log( arcTanValue / Math.PI * 360 );
 
 		var ratio = null;
 		var map = {};
@@ -144,7 +144,7 @@ EX3D.calcuDrive = function(roll,pitch){
 }
 
 EX3D.calcuAction = function(data){
-	console.log(data);
+	//console.log(data);
 
 	if(data.th){
 		var throttle = data.th;
@@ -170,7 +170,7 @@ EX3D.initSocket = function(){
 
 	if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) == false ) {
 
-		EX3Dsocket = io("https://wilson.servebeer.com:3001");
+		EX3Dsocket = io("https://sharkhead-uav.com:3001");
 		
 		EX3Dsocket.on("DR",function(data){
 			EX3D.calcuDrive(data.r, data.p);

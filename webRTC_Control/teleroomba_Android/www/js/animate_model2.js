@@ -51,6 +51,14 @@ animate.init = function(){
 		animate.loadSettingDetail("mediaBox", "Media Playlist");
 	});
 
+	var autoDock = document.getElementById("autoDock");
+	autoDock.addEventListener("click",function(){
+		var cmd = {
+			type:"DK"
+		};
+		WebRTCDataMethold.sendData(cmd);
+	});
+
 	var rebootRoomba = document.getElementById("rebootRoomba");
 	rebootRoomba.addEventListener("click",function(){
 		var cmd = {

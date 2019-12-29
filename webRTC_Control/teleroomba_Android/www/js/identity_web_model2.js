@@ -6,7 +6,7 @@ var identity = {
 	role : "control2",
 	target : "frontCam",
 	video : true,
-	audio : false
+	audio : true
 }
 
 

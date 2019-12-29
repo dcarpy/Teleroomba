@@ -80,6 +80,8 @@ var SerialPort = require("serialport");
 //-------------logiEX_HID-------------//
 
 var hid = require('node-hid');
+hid.setDriverType('libusb');
+
 // var BitArray = require('node-bitarray');
 
 // Logitech Extreme 3D Pro's vendorID and productID: 1133:49685 (i.e. 046d:c215)
@@ -101,7 +103,7 @@ logiEX.checkConnection = function(){
 
   var hidDeviceList = hid.devices();
 
-  //console.log(hidDeviceList);
+  console.log(hidDeviceList);
 
   for( i = 0; i < hidDeviceList.length; i++ ){
     if(hidDeviceList[i].vendorId == 1133 && hidDeviceList[i].productId == 49685){

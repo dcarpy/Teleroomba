@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function () {
   // var SERVER_IP = 'localhost';
   // var SERVER_PORT = 8888;
 
-  var SERVER_IP = 'wilson.servebeer.com';
+  var SERVER_IP = 'sharkhead-uav.com';
   var SERVER_PORT = 8001;
 
   //socketCon.init(SERVER_IP);

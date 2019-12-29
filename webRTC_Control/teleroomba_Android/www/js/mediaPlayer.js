@@ -4,7 +4,7 @@ var mediaPlayer = {
 	videoPlayer : null,
 
 	mediaList : null,
-	srcRepo : "https://wilson.servebeer.com:3000/media/"
+	srcRepo : "https://wilson.sharkhead-uav.com:3000/media/"
 
 };
 
