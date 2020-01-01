@@ -89,16 +89,15 @@ var cmd = {
 
 function start () {
   create.open('/dev/ttyUSB0', main)
-  // create.prompt(main);
 }
 
-// Main Program:
+// Main program
+
 function main (r) {
   r.start()
-  r.safe()
+  //r.safe()
   robot = r
 
-  // We'll play this song whenever entering user-control
   robot.setSong(0, [
     [72, 32],
     [76, 32],
@@ -125,7 +124,7 @@ function main (r) {
 
 function handleCmd (c) {
   if (c.cmd == 1) {
-    robot.drivePower(c.buffer1 * 10, c.buffer2 * 10)
+    robot.drivePower(c.buffer1, c.buffer2)
   } else if (c.cmd == 2) {
     robot.play(1)
   } else if (c.cmd == 3) {
@@ -137,8 +136,6 @@ function handleCmd (c) {
 }
 
 // ---------Socket.io------------//
-
-// var serialReady = true;
 
 io.on('connection', function (socket) {
   console.log(' Teleroomba UI opened via socket ' + socket.id)
@@ -154,9 +151,8 @@ io.on('connection', function (socket) {
 
   socket.on('DR', function (drive) { // Drive
     cmd.cmd = patchCMD(1)
-    cmd.buffer1 = drive.lV
-    cmd.buffer2 = drive.rV
-    console.log(cmd)
+    cmd.buffer1 = drive.lV * 10
+    cmd.buffer2 = drive.rV * 10
     handleCmd(cmd)
   })
 
@@ -164,7 +160,6 @@ io.on('connection', function (socket) {
     cmd.cmd = patchCMD(2)
     cmd.buffer1 = beep.act
     cmd.buffer2 = beep.tp
-    console.log(cmd)
     handleCmd(cmd)
   })
 
@@ -181,7 +176,6 @@ io.on('connection', function (socket) {
     cmd.buffer1 = 0
     cmd.buffer2 = 0
     console.log('--CMD: SAFE MODE--')
-    console.log(cmd)
     handleCmd(cmd)
   })
 
@@ -191,7 +185,6 @@ io.on('connection', function (socket) {
     }
     cmd.buffer3 = camera.r
     cmd.buffer4 = camera.p
-    console.log(cmd)
   })
 
   socket.on('reqIP', function () {
