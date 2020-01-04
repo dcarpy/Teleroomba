@@ -6,7 +6,7 @@ var identity = {
 	role : "frontCam",
 	target : "control2",
 	
-	video : {optional:[ {minHeight:1280}, {minWidth:720} ]},
+	video : {optional:[ {minHeight:1280}, {minWidth:1024} ]},
 	audio : true
 	
 }
