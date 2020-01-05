@@ -124,7 +124,8 @@ function main (r) {
 
 function handleCmd (c) {
   if (c.cmd == 1) {
-    robot.drivePower(c.buffer1 * 10, c.buffer2 * 10)
+    // Drives each motor at requested velocity (-500 to 500, mm/s)
+    robot.driveSpeed(c.buffer1, c.buffer2)
   } else if (c.cmd == 2) {
     robot.play(1)
   } else if (c.cmd == 3) {
@@ -132,7 +133,7 @@ function handleCmd (c) {
   } else if (c.cmd == 4) {
     robot.safe()
   }
-  console.log('cmd = ' + c.cmd)
+  console.log('cmd = ' + c.cmd + ' (' + c.buffer1 + ',' + c.buffer2 + ')')
 }
 
 // ---------Socket.io------------//
@@ -151,8 +152,8 @@ io.on('connection', function (socket) {
 
   socket.on('DR', function (drive) { // Drive
     cmd.cmd = patchCMD(1)
-    cmd.buffer1 = drive.lV
-    cmd.buffer2 = drive.rV
+    cmd.buffer1 = drive.lV * 10
+    cmd.buffer2 = drive.rV * 10
     handleCmd(cmd)
   })
 
