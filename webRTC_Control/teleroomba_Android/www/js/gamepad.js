@@ -14,7 +14,10 @@ gamepad.init = function () {
   joypad.on('connect', e => updateInfo(e))
   joypad.on('disconnect', e => resetInfo(e))
   joypad.on('axis_move', e => {
-    console.log(e.detail)
+	//const { gamepad } = e;
+	//const { gp } = e.detail;
+	//console.log(gp.id)
+    console.log(e.gamepad.id)
     return moveBall(e)
   })
 }
@@ -47,12 +50,13 @@ function deadzone (v) {
 }
 
 function moveBall (e) {
-  const { stickMoved, directionOfMovement, axisMovementValue } = e.detail
+  const { stickMoved, directionOfMovement, axisMovementValue, axis } = e.detail
   if (stickMoved === 'right_stick') {
     switch (directionOfMovement) {
       case 'left':
         console.log(axisMovementValue)
         console.log(deadzone(axisMovementValue))
+		console.log(axis)
         break
       case 'right':
         console.log(axisMovementValue)
