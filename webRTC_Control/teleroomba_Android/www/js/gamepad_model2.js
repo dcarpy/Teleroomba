@@ -2,6 +2,7 @@
 
 var haveEvents = 'ongamepadconnected' in window
 var controllers = {}
+var gamepadLastTimestamp = -1
 
 function connecthandler (e) {
   console.log('Gamepad connected at index %d: %s. %d buttons, %d axes.',
@@ -34,24 +35,33 @@ function updateStatus () {
   for (j in controllers) {
     var controller = controllers[j]
 
-    for (i = 0; i < controller.buttons.length; i++) {
-      var val = controller.buttons[i]
-      var pressed = val == 1.0
-      if (typeof (val) === 'object') {
-        pressed = val.pressed
-        val = val.value
+    var timestamp = controller.timestamp
+
+    if (timestamp != gamepadLastTimestamp) {
+      for (i = 0; i < controller.buttons.length; i++) {
+        var val = controller.buttons[i]
+        var pressed = val == 1.0
+        if (typeof (val) === 'object') {
+          pressed = val.pressed
+          val = val.value
+        }
+
+        var pct = Math.round(val * 100) + '%'
+
+        if (pressed) {
+          // console.log('Button pressed')
+        }
       }
 
-      var pct = Math.round(val * 100) + '%'
-
-      if (pressed) {
-        // console.log('Button pressed')
-      }
+      const x = controller.axes[2]
+      console.log(x)
+      console.log(deadzone(x))
+      const y = controller.axes[3]
+      console.log(y)
+      console.log(deadzone(y))
     }
 
-    for (i = 0; i < controller.axes.length; i++) {
-      console.log(controller.axes[i])
-    }
+    gamepadLastTimestamp = timestamp
   }
 
   requestAnimationFrame(updateStatus)
@@ -71,7 +81,7 @@ function scangamepads () {
 }
 
 function deadzone (v) {
-  const DEADZONE = 0.2
+  const DEADZONE = 0.1
 
   if (Math.abs(v) < DEADZONE) {
     v = 0
