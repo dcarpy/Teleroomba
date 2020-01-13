@@ -144,7 +144,7 @@ EX3D.calcuDrive = function(roll,pitch){
 }
 
 EX3D.calcuAction = function(data){
-	//console.log(data);
+	console.log(data);
 
 	if(data.th){
 		var throttle = data.th;
@@ -163,7 +163,7 @@ EX3D.calcuAction = function(data){
 			}
 		}
 	}
-	console.log(EX3D.throttle);
+	//console.log(EX3D.throttle);
 }
 
 EX3D.initSocket = function(){
