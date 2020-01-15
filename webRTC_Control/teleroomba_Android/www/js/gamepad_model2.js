@@ -145,7 +145,7 @@ function connecthandler (e) {
 
 function addgamepad (gamepad) {
   controllers[gamepad.index] = gamepad
-  // requestAnimationFrame(updateStatus)
+  requestAnimationFrame(updateStatus)
 }
 
 function disconnecthandler (e) {
@@ -185,6 +185,11 @@ function updateStatus () {
         }
       }
 
+      const coord = { x: controller.axes[2], y: controller.axes[3] }
+      const deadzone = 0.20
+      const force = radial(coord, deadzone, normalise)
+      // console.log(force.x, force.y);
+
       const x = controller.axes[2]
       // const x = applyDeadzone (controller.axes[2], 0.15)
       // console.log(x)
@@ -192,13 +197,14 @@ function updateStatus () {
       // const y = applyDeadzone (controller.axes[3], 0.15)
       // console.log(y)
 
-      gp.calcuDrive(x, y)
+      // gp.calcuDrive(x, y)
+      gp.calcuDrive(force.x, force.y)
     }
 
     gamepadLastTimestamp = timestamp
   }
 
-  // requestAnimationFrame(updateStatus)
+  requestAnimationFrame(updateStatus)
 }
 
 function scangamepads () {
@@ -211,6 +217,39 @@ function scangamepads () {
         addgamepad(gamepads[i])
       }
     }
+  }
+}
+
+function raw (scalar) {
+  return scalar
+}
+
+function normalise (scalar, deadzone = 0) {
+  if (scalar === 0) {
+    return scalar
+  }
+
+  const absScalar = Math.abs(scalar)
+  const normalised = (absScalar - deadzone) / (1 - deadzone)
+
+  return scalar < 0 ? -normalised : normalised
+}
+
+function radial (coord, deadzone = 0, post = normalise) {
+  const angle = Math.atan2(coord.y, coord.x)
+  let magnitude = Math.sqrt(coord.x * coord.x + coord.y * coord.y)
+
+  if (magnitude <= deadzone) {
+    return { x: 0, y: 0 }
+  }
+
+  if (magnitude > 1) {
+    magnitude = 1
+  }
+
+  return {
+    x: Math.cos(angle) * post(magnitude, deadzone),
+    y: Math.sin(angle) * post(magnitude, deadzone)
   }
 }
 
