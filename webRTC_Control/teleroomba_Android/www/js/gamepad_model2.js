@@ -35,10 +35,7 @@ gp.init = function (size) {
 }
 
 gp.calcuDrive = function (roll, pitch) {
-  // deltaX = ((roll/512) - 1 );
   var deltaX = roll
-
-  // deltaY = ((pitch/512) - 1 );
   var deltaY = pitch
 
   gp.knob.style.transform = 'translateX(' + deltaX * gp.size + 'px) translateY(' + deltaY * gp.size + 'px)'
@@ -90,7 +87,7 @@ gp.calcuDrive = function (roll, pitch) {
   dir = Number(dir.toPrecision(3))
 
   if (deltaY < 0) {
-    // var map = getMapVal()
+    map = getMapVal()
 
     gp.data.lV = parseInt((dir / 45 - 1) * power * power * 50)
     gp.data.rV = parseInt((3 - dir / 45) * power * power * 50)
@@ -172,8 +169,6 @@ function updateStatus () {
           val = val.value
         }
 
-        var pct = Math.round(val * 100) + '%'
-
         if (pressed) {
           // console.log('Button pressed')
         }
@@ -206,7 +201,9 @@ function scangamepads () {
       if (gamepads[i].index in controllers) {
         controllers[gamepads[i].index] = gamepads[i]
       } else {
-        addgamepad(gamepads[i])
+        if (gamepads[i].mapping === 'standard') {
+          addgamepad(gamepads[i])
+        }
       }
     }
   }
