@@ -32,8 +32,6 @@ gp.init = function (size) {
 
   range.style.height = size * 2 + 'px'
   range.style.width = size * 2 + 'px'
-
-  // EX3D.initSocket();
 }
 
 gp.calcuDrive = function (roll, pitch) {
@@ -72,8 +70,6 @@ gp.calcuDrive = function (roll, pitch) {
     }
   }
 
-  // console.log(ratio);
-
   function getMapVal () {
     var map = {}
     var disDelta = (Math.sqrt(Math.pow(deltaX * gp.size, 2) + Math.pow(deltaY * gp.size, 2)))
@@ -83,8 +79,6 @@ gp.calcuDrive = function (roll, pitch) {
 
     return map
   }
-
-  // console.log( deltaY/deltaX );
 
   gp.mapKnob.style.transform = 'translateX(' + map.x + 'px) translateY(' + map.y + 'px)'
 
@@ -96,7 +90,7 @@ gp.calcuDrive = function (roll, pitch) {
   dir = Number(dir.toPrecision(3))
 
   if (deltaY < 0) {
-    var map = getMapVal()
+    // var map = getMapVal()
 
     gp.data.lV = parseInt((dir / 45 - 1) * power * power * 50)
     gp.data.rV = parseInt((3 - dir / 45) * power * power * 50)
@@ -169,10 +163,10 @@ function updateStatus () {
 
     var timestamp = controller.timestamp
 
-    if (timestamp != gamepadLastTimestamp) {
+    if (timestamp !== gamepadLastTimestamp) {
       for (i = 0; i < controller.buttons.length; i++) {
         var val = controller.buttons[i]
-        var pressed = val == 1.0
+        var pressed = val === 1.0
         if (typeof (val) === 'object') {
           pressed = val.pressed
           val = val.value
@@ -186,15 +180,13 @@ function updateStatus () {
       }
 
       const coord = { x: controller.axes[2], y: controller.axes[3] }
-      const deadzone = 0.20
+      const deadzone = 0.10
       const force = radial(coord, deadzone, normalise)
       // console.log(force.x, force.y);
 
       const x = controller.axes[2]
-      // const x = applyDeadzone (controller.axes[2], 0.15)
       // console.log(x)
       const y = controller.axes[3]
-      // const y = applyDeadzone (controller.axes[3], 0.15)
       // console.log(y)
 
       // gp.calcuDrive(x, y)
@@ -251,14 +243,6 @@ function radial (coord, deadzone = 0, post = normalise) {
     x: Math.cos(angle) * post(magnitude, deadzone),
     y: Math.sin(angle) * post(magnitude, deadzone)
   }
-}
-
-function applyDeadzone (number, threshold) {
-  var percentage = (Math.abs(number) - threshold) / (1 - threshold)
-  if (percentage < 0) {
-    percentage = 0
-  }
-  return percentage * (number > 0 ? 1 : -1)
 }
 
 window.addEventListener('gamepadconnected', connecthandler)
