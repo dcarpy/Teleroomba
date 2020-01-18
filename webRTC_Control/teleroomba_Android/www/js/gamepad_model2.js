@@ -153,43 +153,41 @@ function updateStatus () {
   }
 
   var i = 0
-  var j
 
-  for (j in controllers) {
-    var controller = controllers[j]
+  // use first gamepad detected
+  var controller = controllers[0]
 
-    var timestamp = controller.timestamp
+  var timestamp = controller.timestamp
 
-    if (timestamp !== gamepadLastTimestamp) {
-      for (i = 0; i < controller.buttons.length; i++) {
-        var val = controller.buttons[i]
-        var pressed = val === 1.0
-        if (typeof (val) === 'object') {
-          pressed = val.pressed
-          val = val.value
-        }
-
-        if (pressed) {
-          // console.log('Button pressed')
-        }
+  if (timestamp !== gamepadLastTimestamp) {
+    for (i = 0; i < controller.buttons.length; i++) {
+      var val = controller.buttons[i]
+      var pressed = val === 1.0
+      if (typeof (val) === 'object') {
+        pressed = val.pressed
+        val = val.value
       }
 
-      const coord = { x: controller.axes[2], y: controller.axes[3] }
-      const deadzone = 0.10
-      const force = radial(coord, deadzone, normalise)
-      // console.log(force.x, force.y);
-
-      const x = controller.axes[2]
-      // console.log(x)
-      const y = controller.axes[3]
-      // console.log(y)
-
-      // gp.calcuDrive(x, y)
-      gp.calcuDrive(force.x, force.y)
+      if (pressed) {
+        // console.log('Button pressed')
+      }
     }
 
-    gamepadLastTimestamp = timestamp
+    const coord = { x: controller.axes[2], y: controller.axes[3] }
+    const deadzone = 0.10
+    const force = radial(coord, deadzone, normalise)
+    // console.log(force.x, force.y);
+
+    const x = controller.axes[2]
+    // console.log(x)
+    const y = controller.axes[3]
+    // console.log(y)
+
+    // gp.calcuDrive(x, y)
+    gp.calcuDrive(force.x, force.y)
   }
+
+  gamepadLastTimestamp = timestamp
 
   requestAnimationFrame(updateStatus)
 }
