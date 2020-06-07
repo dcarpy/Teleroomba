@@ -132,7 +132,8 @@ document.addEventListener('DOMContentLoaded', function () {
         call.on('close',function(){
           remoteVideo.style.backgroundColor = "#FFF";
           webConsole.logMessage("Peer", " Roomba has disconnected");
-          remoteVideo.src = "img/placeHolderVideo.mp4";
+          remoteVideo.srcObject = "img/placeHolderVideo.mp4";
+          //remoteVideo.src = "img/placeHolderVideo.mp4";
           remoteVideo.loop = "loop";
           WebRTCDataMethold.connected = false;
           //lost connection stop moving! speak to serial port
@@ -201,7 +202,8 @@ document.addEventListener('DOMContentLoaded', function () {
   // set the "REMOTE" video element source
   var showRemoteStream = function (stream) {
 
-    remoteVideo.src = window.URL.createObjectURL(stream);
+    remoteVideo.srcObject = stream;
+    //remoteVideo.src = window.URL.createObjectURL(stream);
     remoteVideo.style.backgroundColor = "#333";
 
     webConsole.logMessage("On Air","You have telepresence on the other side!");
