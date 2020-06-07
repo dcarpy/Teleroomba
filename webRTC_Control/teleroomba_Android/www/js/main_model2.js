@@ -182,7 +182,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
         function (stream) {//callback for create url for local video 
           localStream = stream;
-          localVideo.src = window.URL.createObjectURL(stream);
+		  localVideo.srcObject = stream;
+          //localVideo.src = window.URL.createObjectURL(stream);
           webConsole.logMessage("Local Media", "Local Video Go!");
 
           if (successCb) {

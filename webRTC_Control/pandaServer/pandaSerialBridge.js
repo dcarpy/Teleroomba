@@ -75,10 +75,6 @@ app.get('/info', function (req, res) {
   res.sendFile(__dirname + 'public/info.html')
 })
 
-app.get('/localQR', function (req, res) {
-  res.sendFile(__dirname + 'public/localQR.html')
-})
-
 var cmd = {
   cmd: 0,
   buffer1: 0,
