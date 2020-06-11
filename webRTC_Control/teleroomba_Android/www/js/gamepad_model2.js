@@ -147,6 +147,13 @@ function removegamepad (gamepad) {
   delete controllers[gamepad.index]
 }
 
+function buttonPressed(b) {
+  if (typeof(b) == "object") {
+    return b.pressed;
+  }
+  return b == 1.0;
+}
+
 function updateStatus () {
   if (!haveEvents) {
     scangamepads()
@@ -160,18 +167,14 @@ function updateStatus () {
   var timestamp = controller.timestamp
 
   if (timestamp !== gamepadLastTimestamp) {
-    for (i = 0; i < controller.buttons.length; i++) {
-      var val = controller.buttons[i]
-      var pressed = val === 1.0
-      if (typeof (val) === 'object') {
-        pressed = val.pressed
-        val = val.value
-      }
-
-      if (pressed) {
-        // console.log('Button pressed')
-      }
-    }
+	
+	if (buttonPressed(controller.buttons[8])) {
+	  console.log('Button Back pressed')
+	}
+	
+	if (buttonPressed(controller.buttons[9])) {
+	  console.log('Button Start pressed')
+	}
 
     const coord = { x: controller.axes[2], y: controller.axes[3] }
     const deadzone = 0.10
