@@ -125,12 +125,12 @@ function handleCmd (c) {
     // Drives motors at requested power level (-255 to 255, PWM)
     //robot.drivePower(c.buffer1 / 1.9608, c.buffer2 / 1.9608);
   } else if (c.cmd == 2) {
-      if (c.buffer1 == 1) {
-          if (c.buffer2 == 1)
-            robot.play(0)  
-          else  
+	  if (c.buffer1 == 1) {
+		  if (c.buffer2 == 1)
+			robot.play(0)  
+		  else  
             robot.play(1)
-      }
+	  }
   } else if (c.cmd == 3) {
     robot.autoDock()
   } else if (c.cmd == 4) {
