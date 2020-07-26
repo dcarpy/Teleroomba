@@ -132,7 +132,7 @@ gp.calcuDrive2 = function (roll, pitch) {
     var deltaX = roll * 50;
     var deltaY = pitch * 50;
 
-    var speedY = 0 - deltaY;
+    //var speedY = 0 - deltaY;
     //console.log(speedY);
 
     let speedVector = Math.sqrt(Math.pow(deltaX, 2) + Math.pow(deltaY, 2));
@@ -165,31 +165,46 @@ gp.calcuDrive2 = function (roll, pitch) {
             gp.data.rV = Math.round(-1 * (speedVector * arcTanValue) + (0 - deltaY) * 1.1);
             if (gp.data.rV >= 50) {
                 gp.data.rV = 50;
-            };
+            }
         }
         // backward
     } else if (0 - deltaY <= 0) {
-        if (deltaX >= 40) {
-            console.log('turning right');
-            gp.data.lV = turningSpeedBack;
-            gp.data.rV = Math.round((speedVector * arcTanValue + (0 - deltaY) * 1.25));
-            if (gp.data.rV <= -50) {
-                gp.data.rV = -50;
-            }
-        } else if (deltaX < -40) {
+        if (deltaX <= 0) {
             console.log('turning left');
-            gp.data.lV = Math.round(-1 * (speedVector * arcTanValue) + (0 - deltaY) * 1.25);
-            if (gp.data.lV <= -50) {
-                gp.data.lV = -50;
-            };
-            gp.data.rV = turningSpeedBack;
-        } else if (deltaX > -25 && deltaX < 25) {
-            gp.data.lV = -10;
-            gp.data.rV = -10;
-        } else {
-            gp.data.lV = 0;
-            gp.data.rV = 0;
+            gp.data.lV = Math.round((speedVector * arcTanValue + (0 - deltaY)) * 1.1);
+            if (gp.data.lV >= 50) {
+                gp.data.lV = 50;
+            }
+            gp.data.rV = turningSpeed;
+        } else if (deltaX > 0) {
+            console.log('turning right');
+            gp.data.lV = turningSpeed;
+            gp.data.rV = Math.round(-1 * (speedVector * arcTanValue) + (0 - deltaY) * 1.1);
+            if (gp.data.rV >= 50) {
+                gp.data.rV = 50;
+            }
         }
+        // if (deltaX >= 40) {
+        // console.log('turning right');
+        // gp.data.lV = turningSpeedBack;
+        // gp.data.rV = Math.round((speedVector * arcTanValue + (0 - deltaY) * 1.25));
+        // if (gp.data.rV <= -50) {
+        // gp.data.rV = -50;
+        // }
+        // } else if (deltaX < -40) {
+        // console.log('turning left');
+        // gp.data.lV = Math.round(-1 * (speedVector * arcTanValue) + (0 - deltaY) * 1.25);
+        // if (gp.data.lV <= -50) {
+        // gp.data.lV = -50;
+        // };
+        // gp.data.rV = turningSpeedBack;
+        // } else if (deltaX > -25 && deltaX < 25) {
+        // gp.data.lV = -10;
+        // gp.data.rV = -10;
+        // } else {
+        // gp.data.lV = 0;
+        // gp.data.rV = 0;
+        // }
     }
 
     gp.data.type = 'DR';
@@ -315,7 +330,7 @@ function radial(coord, deadzone = 0, post = normalise) {
 
     return {
         x: Math.cos(angle) * post(magnitude, deadzone),
-        y: Math.sin(angle) * post(magnitude, deadzone);
+        y: Math.sin(angle) * post(magnitude, deadzone)
     }
 }
 

@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', function () {
             peer = new Peer(callerId, {
                 host: SERVER_IP,
                 port: SERVER_PORT,
-                secure: true;
+                secure: true
             });
 
             // hack to get around the fact that if a server connection cannot
@@ -175,7 +175,7 @@ document.addEventListener('DOMContentLoaded', function () {
         } else { // create local if do not have one
             navigator.webkitGetUserMedia({
                 video: identity.video,
-                audio: identity.audio;
+                audio: identity.audio
             },
 
                 function (stream) { //callback for create url for local video

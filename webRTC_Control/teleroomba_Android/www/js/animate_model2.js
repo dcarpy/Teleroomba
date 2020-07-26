@@ -354,7 +354,7 @@ animate.goFullScreen = function (dom, option) {
                 animate.rollIndiKnob = document.getElementById("rollIndicationKnob");
 
                 setTimeout(function () {
-                    animate.connectLocalServer();
+                    animate.connectLocalServer()
                 }, 120)
 
                 //start headset orientation sync

@@ -7,7 +7,7 @@ EX3D = {
     knob: null,
     mapKnob: null,
     size: 80,
-    trigger: 0,
+    trigger: 0
 
 };
 
