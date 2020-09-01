@@ -40,7 +40,8 @@ joystick.stick.addEventListener('touchEnd', function (event) {
 
 joystick.calcuDrive = function () {
     var speedY = 0 - joystick.stick.deltaY();
-    console.log(speedY);
+    console.log("deltaY = " + joystick.stick.deltaY());
+    console.log("deltaX = " + joystick.stick.deltaX());
 
     let speedVector = Math.sqrt(Math.pow(joystick.stick.deltaX(), 2) +
             Math.pow(joystick.stick.deltaY(), 2));
@@ -48,49 +49,48 @@ joystick.calcuDrive = function () {
     let arcCotValue = (Math.atan((0 - joystick.stick.deltaY()) / joystick.stick.deltaX()) / (12 * Math.PI));
     let turningSpeed = Math.round(50 * (speedVector / 50) * 1.1);
     let turningSpeedBack = Math.round(50 * (speedVector / 50) * 1.25);
+
     if (turningSpeed >= 50) {
         turningSpeed = 50
     }
     if (turningSpeedBack >= 50) {
         turningSpeedBack = 50
     }
-    // console.log(arcTanValue);
-
-    console.log(joystick.stick.deltaX());
 
     // forward
     if (0 - joystick.stick.deltaY() >= 0) {
+        // left
         if (joystick.stick.deltaX() <= 0) {
-            console.log('turning left');
             joystick.data.lV = Math.round((speedVector * arcTanValue + (0 - joystick.stick.deltaY())) * 1.1);
             if (joystick.data.lV >= 50) {
                 joystick.data.lV = 50
             }
             joystick.data.rV = turningSpeed;
+        // right
         } else if (joystick.stick.deltaX() > 0) {
-            console.log('turning right');
             joystick.data.lV = turningSpeed;
             joystick.data.rV = Math.round(-1 * (speedVector * arcTanValue) + (0 - joystick.stick.deltaY()) * 1.1);
             if (joystick.data.rV >= 50) {
                 joystick.data.rV = 50
             };
         }
-        // backward
+    // backward
     } else if (0 - joystick.stick.deltaY() <= 0) {
+        // right
         if (joystick.stick.deltaX() >= 40) {
-            console.log('turning right');
             joystick.data.lV = turningSpeedBack;
             joystick.data.rV = Math.round((speedVector * arcTanValue + (0 - joystick.stick.deltaY()) * 1.25));
             if (joystick.data.rV <= -50) {
                 joystick.data.rV = -50
             }
+        // left
         } else if (joystick.stick.deltaX() < -40) {
-            console.log('turning left');
             joystick.data.lV = Math.round(-1 * (speedVector * arcTanValue) + (0 - joystick.stick.deltaY()) * 1.25);
             if (joystick.data.lV <= -50) {
                 joystick.data.lV = -50
             };
             joystick.data.rV = turningSpeedBack;
+        // 
         } else if (joystick.stick.deltaX() > -25 && joystick.stick.deltaX() < 25) {
             joystick.data.lV = -10;
             joystick.data.rV = -10;

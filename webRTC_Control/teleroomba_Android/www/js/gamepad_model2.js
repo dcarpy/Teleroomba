@@ -133,13 +133,16 @@ gp.calcuDrive2 = function (roll, pitch) {
     var deltaY = pitch * 50;
 
     //var speedY = 0 - deltaY;
-    //console.log(speedY);
+    console.log("deltaY = " + deltaY);
+    console.log("deltaX = " + deltaX);
 
     let speedVector = Math.sqrt(Math.pow(deltaX, 2) + Math.pow(deltaY, 2));
     let arcTanValue = (Math.atan(deltaX / (0 - deltaY)) / (12 * Math.PI));
     let arcCotValue = (Math.atan((0 - deltaY) / deltaX) / (12 * Math.PI));
     let turningSpeed = Math.round(50 * (speedVector / 50) * 1.1);
+    console.log("turningSpeed = " + turningSpeed);
     let turningSpeedBack = Math.round(50 * (speedVector / 50) * 1.25);
+    console.log("turningSpeedBack = " + turningSpeedBack);
 
     if (turningSpeed >= 50) {
         turningSpeed = 50;
@@ -148,36 +151,34 @@ gp.calcuDrive2 = function (roll, pitch) {
         turningSpeedBack = 50;
     }
 
-    //console.log(deltaX);
-
     // forward
     if (0 - deltaY >= 0) {
+        // left
         if (deltaX <= 0) {
-            console.log('turning left');
             gp.data.lV = Math.round((speedVector * arcTanValue + (0 - deltaY)) * 1.1);
             if (gp.data.lV >= 50) {
                 gp.data.lV = 50;
             }
             gp.data.rV = turningSpeed;
+        // right
         } else if (deltaX > 0) {
-            console.log('turning right');
             gp.data.lV = turningSpeed;
             gp.data.rV = Math.round(-1 * (speedVector * arcTanValue) + (0 - deltaY) * 1.1);
             if (gp.data.rV >= 50) {
                 gp.data.rV = 50;
             }
         }
-        // backward
+    // backward
     } else if (0 - deltaY <= 0) {
+        // left
         if (deltaX <= 0) {
-            console.log('turning left');
             gp.data.lV = Math.round((speedVector * arcTanValue + (0 - deltaY)) * 1.1);
             if (gp.data.lV >= 50) {
                 gp.data.lV = 50;
             }
             gp.data.rV = turningSpeed;
+        // right
         } else if (deltaX > 0) {
-            console.log('turning right');
             gp.data.lV = turningSpeed;
             gp.data.rV = Math.round(-1 * (speedVector * arcTanValue) + (0 - deltaY) * 1.1);
             if (gp.data.rV >= 50) {
@@ -208,7 +209,7 @@ gp.calcuDrive2 = function (roll, pitch) {
     }
 
     gp.data.type = 'DR';
-    console.log(gp.data);
+    //console.log(gp.data);
     WebRTCDataMethold.sendData(gp.data);
 }
 
