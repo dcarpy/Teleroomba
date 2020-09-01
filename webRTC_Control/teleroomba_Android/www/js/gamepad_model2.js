@@ -34,7 +34,7 @@ gp.init = function (size) {
     range.style.width = size * 2 + 'px';
 }
 
-gp.calcuDrive = function (roll, pitch) {
+gp.calcuDrive2 = function (roll, pitch) {
     var deltaX = roll;
     var deltaY = pitch;
 
@@ -127,21 +127,22 @@ gp.calcuDrive = function (roll, pitch) {
     WebRTCDataMethold.sendData(gp.data);
 }
 
-gp.calcuDrive2 = function (roll, pitch) {
+gp.calcuDrive = function (roll, pitch) {
 
     var deltaX = roll * 50;
     var deltaY = pitch * 50;
+    
+    gp.knob.style.transform = 'translateX(' + deltaX/50 * gp.size + 'px) translateY(' + deltaY/50 * gp.size + 'px)';
 
-    //var speedY = 0 - deltaY;
     console.log("deltaY = " + deltaY);
     console.log("deltaX = " + deltaX);
 
     let speedVector = Math.sqrt(Math.pow(deltaX, 2) + Math.pow(deltaY, 2));
     let arcTanValue = (Math.atan(deltaX / (0 - deltaY)) / (12 * Math.PI));
     let arcCotValue = (Math.atan((0 - deltaY) / deltaX) / (12 * Math.PI));
-    let turningSpeed = Math.round(50 * (speedVector / 50) * 1.1);
+    let turningSpeed = Math.round(50 * (speedVector / 50) * 1.0);
     console.log("turningSpeed = " + turningSpeed);
-    let turningSpeedBack = Math.round(50 * (speedVector / 50) * 1.25);
+    let turningSpeedBack = Math.round(50 * (speedVector / 50) * 1.0);
     console.log("turningSpeedBack = " + turningSpeedBack);
 
     if (turningSpeed >= 50) {
@@ -153,63 +154,49 @@ gp.calcuDrive2 = function (roll, pitch) {
 
     // forward
     if (0 - deltaY >= 0) {
-        // left
+        // forward left
         if (deltaX <= 0) {
-            gp.data.lV = Math.round((speedVector * arcTanValue + (0 - deltaY)) * 1.1);
+            gp.data.lV = Math.round((speedVector * arcTanValue + (0 - deltaY)) * 1.0);
             if (gp.data.lV >= 50) {
                 gp.data.lV = 50;
             }
             gp.data.rV = turningSpeed;
-        // right
+        // forward right
         } else if (deltaX > 0) {
             gp.data.lV = turningSpeed;
-            gp.data.rV = Math.round(-1 * (speedVector * arcTanValue) + (0 - deltaY) * 1.1);
+            gp.data.rV = Math.round(-1 * (speedVector * arcTanValue) + (0 - deltaY) * 1.0);
             if (gp.data.rV >= 50) {
                 gp.data.rV = 50;
             }
         }
     // backward
     } else if (0 - deltaY <= 0) {
-        // left
+        // backward left
         if (deltaX <= 0) {
-            gp.data.lV = Math.round((speedVector * arcTanValue + (0 - deltaY)) * 1.1);
-            if (gp.data.lV >= 50) {
-                gp.data.lV = 50;
+            gp.data.lV = Math.round((-1 * speedVector * arcTanValue + (0 - deltaY)) * 1.0);
+            if (gp.data.lV <= -50) {
+                gp.data.lV = -50;
             }
-            gp.data.rV = turningSpeed;
-        // right
+            gp.data.rV = -turningSpeedBack;
+        // backward right
         } else if (deltaX > 0) {
-            gp.data.lV = turningSpeed;
-            gp.data.rV = Math.round(-1 * (speedVector * arcTanValue) + (0 - deltaY) * 1.1);
-            if (gp.data.rV >= 50) {
-                gp.data.rV = 50;
+            gp.data.lV = -turningSpeedBack;
+            gp.data.rV = Math.round((speedVector * arcTanValue) + (0 - deltaY) * 1.0);
+            if (gp.data.rV <= -50) {
+                gp.data.rV = -50;
             }
         }
-        // if (deltaX >= 40) {
-        // console.log('turning right');
-        // gp.data.lV = turningSpeedBack;
-        // gp.data.rV = Math.round((speedVector * arcTanValue + (0 - deltaY) * 1.25));
-        // if (gp.data.rV <= -50) {
-        // gp.data.rV = -50;
-        // }
-        // } else if (deltaX < -40) {
-        // console.log('turning left');
-        // gp.data.lV = Math.round(-1 * (speedVector * arcTanValue) + (0 - deltaY) * 1.25);
-        // if (gp.data.lV <= -50) {
-        // gp.data.lV = -50;
-        // };
-        // gp.data.rV = turningSpeedBack;
-        // } else if (deltaX > -25 && deltaX < 25) {
-        // gp.data.lV = -10;
-        // gp.data.rV = -10;
-        // } else {
-        // gp.data.lV = 0;
-        // gp.data.rV = 0;
-        // }
+    }
+    
+    if (isNaN(gp.data.rV) || isNaN(gp.data.lV)) {
+        gp.data = {
+            lV: 0,
+            rV: 0
+        }
     }
 
     gp.data.type = 'DR';
-    //console.log(gp.data);
+    console.log(gp.data);
     WebRTCDataMethold.sendData(gp.data);
 }
 
@@ -276,7 +263,7 @@ function updateStatus() {
         // console.log(y);
 
         // gp.calcuDrive(x, y);
-        gp.calcuDrive2(force.x, force.y);
+        gp.calcuDrive(force.x, force.y);
     }
 
     gamepadLastTimestamp = timestamp;
