@@ -18,7 +18,10 @@ const junk = require('junk')
 
 var httpsOptions = {
   key: fs.readFileSync('privkey.pem'),
-  cert: fs.readFileSync('cert.pem')
+  cert: fs.readFileSync('cert.pem'),
+  ca: fs.readFileSync('ComodoCA.pem'),
+  requestCert: false,
+  rejectUnauthorized: false
 }
 
 var checkMedia = function () {
