@@ -78,6 +78,28 @@ app.get('/info', function (req, res) {
   res.sendFile(__dirname + 'public/info.html')
 })
 
+let {PythonShell} = require('python-shell')
+
+let options = {
+  mode: 'text',
+  pythonOptions: ['-u'], // get print results in real-time
+  scriptPath: '/home/pi/Teleroomba/webRTC_Control/pandaServer/python'
+};
+
+let sixfab_ps = new PythonShell('sixfab.py', options);
+
+sixfab_ps.on('message', function (message) {
+  // received a message sent from the Python script
+  console.log(message);
+});
+
+sixfab_ps.end(function (err) {
+    if (err) {
+        throw err;
+    }
+    console.log("End Sixfab PythonShell");
+});
+
 var cmd = {
   cmd: 0,
   buffer1: 0,
